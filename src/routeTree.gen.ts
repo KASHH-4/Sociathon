@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CommunicationRouteImport } from './routes/communication'
+import { Route as MapRouteImport } from './routes/map'
+import { Route as RecoveryRouteImport } from './routes/recovery'
+import { Route as WearableRouteImport } from './routes/wearable'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommunicationRoute = CommunicationRouteImport.update({
+  id: '/communication',
+  path: '/communication',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecoveryRoute = RecoveryRouteImport.update({
+  id: '/recovery',
+  path: '/recovery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WearableRoute = WearableRouteImport.update({
+  id: '/wearable',
+  path: '/wearable',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/communication': typeof CommunicationRoute
+  '/map': typeof MapRoute
+  '/recovery': typeof RecoveryRoute
+  '/wearable': typeof WearableRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/communication': typeof CommunicationRoute
+  '/map': typeof MapRoute
+  '/recovery': typeof RecoveryRoute
+  '/wearable': typeof WearableRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/communication': typeof CommunicationRoute
+  '/map': typeof MapRoute
+  '/recovery': typeof RecoveryRoute
+  '/wearable': typeof WearableRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/communication' | '/map' | '/recovery' | '/wearable'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/communication' | '/map' | '/recovery' | '/wearable'
+  id: '__root__' | '/' | '/communication' | '/map' | '/recovery' | '/wearable'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CommunicationRoute: typeof CommunicationRoute
+  MapRoute: typeof MapRoute
+  RecoveryRoute: typeof RecoveryRoute
+  WearableRoute: typeof WearableRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/communication': {
+      id: '/communication'
+      path: '/communication'
+      fullPath: '/communication'
+      preLoaderRoute: typeof CommunicationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recovery': {
+      id: '/recovery'
+      path: '/recovery'
+      fullPath: '/recovery'
+      preLoaderRoute: typeof RecoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wearable': {
+      id: '/wearable'
+      path: '/wearable'
+      fullPath: '/wearable'
+      preLoaderRoute: typeof WearableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CommunicationRoute: CommunicationRoute,
+  MapRoute: MapRoute,
+  RecoveryRoute: RecoveryRoute,
+  WearableRoute: WearableRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
