@@ -1,8 +1,20 @@
-const CACHE_NAME = "transithear-v1.0.0";
+const CACHE_NAME = "transithear-v1.0.1";
 const OFFLINE_URL = "/offline.html";
 
 const PRECACHE_ASSETS = [
   "/",
+  "/map",
+  "/communication",
+  "/recovery",
+  "/wearable",
+  "/assets/index-DKmeeZq_.js",
+  "/assets/index-CClAn-3A.css",
+  "/assets/transit-app-Haeo9uBS.js",
+  "/assets/map-DZWfxpA4.js",
+  "/assets/communication-6zVHWy-B.js",
+  "/assets/recovery-DWMf6rn0.js",
+  "/assets/wearable-mPdS-YIa.js",
+  "/assets/routes-CgbqpaSI.js",
   "/manifest.webmanifest",
   "/favicon.ico",
   "/icons/icon.svg",

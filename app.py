@@ -174,7 +174,8 @@ def simulate_haptic():
 # -------------------------------------------------------------
 
 @app.route("/assets/<path:filename>")
-def serve_assets(filename):
+@app.route("/<path:prefix>/assets/<path:filename>")
+def serve_assets(filename, prefix=None):
     """Serve bundled JS/CSS chunks directly from static/assets."""
     assets_dir = os.path.join(STATIC_DIR, "assets")
     if os.path.exists(os.path.join(assets_dir, filename)):
