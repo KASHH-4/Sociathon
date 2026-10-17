@@ -1,0 +1,66 @@
+{
+  "_note": "Illustrative stop times and platforms. Real trains stop at these stations; times/platforms are invented for demo purposes.",
+  "train_stops": [
+    {"train_number": "12123", "seq": 1, "station_code": "CSMT", "arr": null, "dep": "07:15", "platform": 3},
+    {"train_number": "12123", "seq": 2, "station_code": "DR",   "arr": "07:26", "dep": "07:27", "platform": 2},
+    {"train_number": "12123", "seq": 3, "station_code": "KYN",  "arr": "08:10", "dep": "08:12", "platform": 4},
+    {"train_number": "12123", "seq": 4, "station_code": "KJT",  "arr": "09:05", "dep": "09:07", "platform": 1},
+    {"train_number": "12123", "seq": 5, "station_code": "LNL",  "arr": "09:55", "dep": "09:57", "platform": 2},
+    {"train_number": "12123", "seq": 6, "station_code": "SVJR", "arr": "11:00", "dep": "11:02", "platform": 1},
+    {"train_number": "12123", "seq": 7, "station_code": "PUNE", "arr": "11:15", "dep": null,    "platform": 3},
+
+    {"train_number": "12124", "seq": 1, "station_code": "PUNE", "arr": null,    "dep": "17:05", "platform": 4},
+    {"train_number": "12124", "seq": 2, "station_code": "SVJR", "arr": "17:18", "dep": "17:20", "platform": 2},
+    {"train_number": "12124", "seq": 3, "station_code": "LNL",  "arr": "18:20", "dep": "18:22", "platform": 1},
+    {"train_number": "12124", "seq": 4, "station_code": "KJT",  "arr": "19:10", "dep": "19:12", "platform": 2},
+    {"train_number": "12124", "seq": 5, "station_code": "KYN",  "arr": "20:00", "dep": "20:02", "platform": 3},
+    {"train_number": "12124", "seq": 6, "station_code": "DR",   "arr": "20:45", "dep": "20:46", "platform": 5},
+    {"train_number": "12124", "seq": 7, "station_code": "CSMT", "arr": "20:58", "dep": null,    "platform": 7},
+
+    {"train_number": "12125", "seq": 1, "station_code": "CSMT", "arr": null,    "dep": "06:25", "platform": 1},
+    {"train_number": "12125", "seq": 2, "station_code": "DR",   "arr": "06:36", "dep": "06:37", "platform": 3},
+    {"train_number": "12125", "seq": 3, "station_code": "LNL",  "arr": "08:25", "dep": "08:27", "platform": 2},
+    {"train_number": "12125", "seq": 4, "station_code": "PUNE", "arr": "09:25", "dep": null,    "platform": 2},
+
+    {"train_number": "12126", "seq": 1, "station_code": "PUNE", "arr": null,    "dep": "07:30", "platform": 1},
+    {"train_number": "12126", "seq": 2, "station_code": "LNL",  "arr": "08:28", "dep": "08:30", "platform": 3},
+    {"train_number": "12126", "seq": 3, "station_code": "DR",   "arr": "10:18", "dep": "10:20", "platform": 4},
+    {"train_number": "12126", "seq": 4, "station_code": "CSMT", "arr": "10:32", "dep": null,    "platform": 5},
+
+    {"train_number": "12127", "seq": 1, "station_code": "CSMT", "arr": null,    "dep": "06:05", "platform": 2},
+    {"train_number": "12127", "seq": 2, "station_code": "DR",   "arr": "06:16", "dep": "06:17", "platform": 1},
+    {"train_number": "12127", "seq": 3, "station_code": "TNA",  "arr": "06:45", "dep": "06:47", "platform": 5},
+    {"train_number": "12127", "seq": 4, "station_code": "KYN",  "arr": "07:12", "dep": "07:14", "platform": 2},
+    {"train_number": "12127", "seq": 5, "station_code": "KJT",  "arr": "08:05", "dep": "08:07", "platform": 1},
+    {"train_number": "12127", "seq": 6, "station_code": "LNL",  "arr": "08:50", "dep": "08:52", "platform": 2},
+    {"train_number": "12127", "seq": 7, "station_code": "SVJR", "arr": "09:55", "dep": "09:57", "platform": 3},
+    {"train_number": "12127", "seq": 8, "station_code": "PUNE", "arr": "10:10", "dep": null,    "platform": 5},
+
+    {"train_number": "12128", "seq": 1, "station_code": "PUNE", "arr": null,    "dep": "17:10", "platform": 2},
+    {"train_number": "12128", "seq": 2, "station_code": "SVJR", "arr": "17:23", "dep": "17:25", "platform": 1},
+    {"train_number": "12128", "seq": 3, "station_code": "LNL",  "arr": "18:25", "dep": "18:27", "platform": 2},
+    {"train_number": "12128", "seq": 4, "station_code": "KJT",  "arr": "19:15", "dep": "19:17", "platform": 1},
+    {"train_number": "12128", "seq": 5, "station_code": "KYN",  "arr": "20:05", "dep": "20:07", "platform": 3},
+    {"train_number": "12128", "seq": 6, "station_code": "TNA",  "arr": "20:32", "dep": "20:34", "platform": 4},
+    {"train_number": "12128", "seq": 7, "station_code": "DR",   "arr": "20:55", "dep": "20:56", "platform": 6},
+    {"train_number": "12128", "seq": 8, "station_code": "CSMT", "arr": "21:07", "dep": null,    "platform": 9},
+
+    {"train_number": "11009", "seq": 1, "station_code": "CSMT", "arr": null,    "dep": "05:30", "platform": 4},
+    {"train_number": "11009", "seq": 2, "station_code": "DR",   "arr": "05:41", "dep": "05:42", "platform": 2},
+    {"train_number": "11009", "seq": 3, "station_code": "KYN",  "arr": "06:30", "dep": "06:32", "platform": 5},
+    {"train_number": "11009", "seq": 4, "station_code": "KJT",  "arr": "07:25", "dep": "07:27", "platform": 1},
+    {"train_number": "11009", "seq": 5, "station_code": "LNL",  "arr": "08:15", "dep": "08:17", "platform": 3},
+    {"train_number": "11009", "seq": 6, "station_code": "PUNE", "arr": "09:15", "dep": null,    "platform": 6},
+
+    {"train_number": "11010", "seq": 1, "station_code": "PUNE", "arr": null,    "dep": "16:30", "platform": 1},
+    {"train_number": "11010", "seq": 2, "station_code": "LNL",  "arr": "17:28", "dep": "17:30", "platform": 2},
+    {"train_number": "11010", "seq": 3, "station_code": "KJT",  "arr": "18:18", "dep": "18:20", "platform": 3},
+    {"train_number": "11010", "seq": 4, "station_code": "KYN",  "arr": "19:10", "dep": "19:12", "platform": 4},
+    {"train_number": "11010", "seq": 5, "station_code": "DR",   "arr": "19:55", "dep": "19:56", "platform": 6},
+    {"train_number": "11010", "seq": 6, "station_code": "CSMT", "arr": "20:07", "dep": null,    "platform": 8},
+
+    {"train_number": "12009", "seq": 1, "station_code": "MMCT", "arr": null,    "dep": "06:00", "platform": 1},
+    {"train_number": "12009", "seq": 2, "station_code": "ST",   "arr": "08:40", "dep": "08:42", "platform": 3},
+    {"train_number": "12009", "seq": 3, "station_code": "ADI",  "arr": "10:45", "dep": null,    "platform": 4}
+  ]
+}

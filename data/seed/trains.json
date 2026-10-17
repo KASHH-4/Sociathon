@@ -1,0 +1,68 @@
+{
+  "_note": "Illustrative data. Train numbers are real Indian Railways numbers; names and routes are approximate. All times and platforms are invented for demo purposes.",
+  "trains": [
+    {
+      "number": "12123",
+      "name": "Deccan Queen Express",
+      "aliases": ["Deccan Queen", "DQ"],
+      "origin_code": "CSMT",
+      "dest_code": "PUNE"
+    },
+    {
+      "number": "12124",
+      "name": "Deccan Queen Express",
+      "aliases": ["Deccan Queen", "DQ"],
+      "origin_code": "PUNE",
+      "dest_code": "CSMT"
+    },
+    {
+      "number": "12125",
+      "name": "Pragati Express",
+      "aliases": ["Pragati"],
+      "origin_code": "CSMT",
+      "dest_code": "PUNE"
+    },
+    {
+      "number": "12126",
+      "name": "Pragati Express",
+      "aliases": ["Pragati"],
+      "origin_code": "PUNE",
+      "dest_code": "CSMT"
+    },
+    {
+      "number": "12127",
+      "name": "Intercity Express",
+      "aliases": ["Intercity", "Mumbai Pune Intercity"],
+      "origin_code": "CSMT",
+      "dest_code": "PUNE"
+    },
+    {
+      "number": "12128",
+      "name": "Intercity Express",
+      "aliases": ["Intercity", "Pune Mumbai Intercity"],
+      "origin_code": "PUNE",
+      "dest_code": "CSMT"
+    },
+    {
+      "number": "11009",
+      "name": "Sinhagad Express",
+      "aliases": ["Sinhagad"],
+      "origin_code": "CSMT",
+      "dest_code": "PUNE"
+    },
+    {
+      "number": "11010",
+      "name": "Sinhagad Express",
+      "aliases": ["Sinhagad"],
+      "origin_code": "PUNE",
+      "dest_code": "CSMT"
+    },
+    {
+      "number": "12009",
+      "name": "Shatabdi Express",
+      "aliases": ["Mumbai Ahmedabad Shatabdi", "Shatabdi"],
+      "origin_code": "MMCT",
+      "dest_code": "ADI"
+    }
+  ]
+}

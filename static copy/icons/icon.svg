@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="112" fill="#18233C" />
+  <rect x="28" y="28" width="456" height="456" rx="92" stroke="#38BDF8" stroke-opacity="0.3" stroke-width="8" />
+  
+  <!-- Wave / Visual Announcements Arcs -->
+  <path d="M 194 140 A 70 70 0 0 1 318 140" stroke="#38BDF8" stroke-width="14" stroke-linecap="round" fill="none" />
+  <path d="M 160 115 A 110 110 0 0 1 352 115" stroke="#14B8A6" stroke-width="14" stroke-linecap="round" fill="none" />
+  
+  <!-- Train Front Body -->
+  <rect x="156" y="180" width="200" height="230" rx="36" fill="#F1F5F9" />
+  <!-- Windshield Screen -->
+  <rect x="178" y="202" width="156" height="84" rx="20" fill="#0EA5E9" />
+  <rect x="194" y="218" width="124" height="12" rx="6" fill="#E0F2FE" fill-opacity="0.6" />
+  
+  <!-- Headlights -->
+  <circle cx="196" cy="340" r="18" fill="#FACC15" />
+  <circle cx="316" cy="340" r="18" fill="#FACC15" />
+  <circle cx="256" cy="340" r="10" fill="#38BDF8" />
+  
+  <!-- Train Grille / Bumper -->
+  <rect x="216" y="375" width="80" height="12" rx="6" fill="#94A3B8" />
+  
+  <!-- Tracks -->
+  <line x1="120" y1="440" x2="392" y2="440" stroke="#94A3B8" stroke-width="12" stroke-linecap="round" />
+</svg>

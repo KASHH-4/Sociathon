@@ -1,0 +1,131 @@
+{
+  "_note": "Illustrative facility data. Statuses and last_verified_at times are invented for demo purposes. Includes all five status types including conflicting and outdated.",
+  "facilities": [
+    {
+      "id": "fac-pune-ramp",
+      "station_code": "PUNE",
+      "name": "Main Entrance Step-free Ramp",
+      "type": "ramp",
+      "status": "verified_operational",
+      "last_verified_at": "2025-06-01T10:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-pune-elevator",
+      "station_code": "PUNE",
+      "name": "Platform 1-2 Elevator",
+      "type": "elevator",
+      "status": "present",
+      "last_verified_at": "2025-05-15T09:00:00Z",
+      "source": "crowd_report"
+    },
+    {
+      "id": "fac-pune-tactile",
+      "station_code": "PUNE",
+      "name": "Tactile Path to Platform 1",
+      "type": "tactile_path",
+      "status": "conflicting",
+      "last_verified_at": "2025-04-20T14:00:00Z",
+      "source": "crowd_report"
+    },
+    {
+      "id": "fac-pune-display",
+      "station_code": "PUNE",
+      "name": "Visual LED Departure Board",
+      "type": "visual_display_board",
+      "status": "verified_operational",
+      "last_verified_at": "2025-06-10T08:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-pune-loop",
+      "station_code": "PUNE",
+      "name": "Induction Loop at Help Desk",
+      "type": "induction_loop",
+      "status": "outdated",
+      "last_verified_at": "2024-09-01T12:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-lnl-ramp",
+      "station_code": "LNL",
+      "name": "Platform 1 Ramp",
+      "type": "ramp",
+      "status": "present",
+      "last_verified_at": "2025-03-10T11:00:00Z",
+      "source": "crowd_report"
+    },
+    {
+      "id": "fac-lnl-display",
+      "station_code": "LNL",
+      "name": "Visual Display Board",
+      "type": "visual_display_board",
+      "status": "unverified",
+      "last_verified_at": null,
+      "source": null
+    },
+    {
+      "id": "fac-lnl-tactile",
+      "station_code": "LNL",
+      "name": "Tactile Path to Platforms",
+      "type": "tactile_path",
+      "status": "verified_operational",
+      "last_verified_at": "2025-05-20T09:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-lnl-loop",
+      "station_code": "LNL",
+      "name": "Induction Loop",
+      "type": "induction_loop",
+      "status": "outdated",
+      "last_verified_at": "2024-08-15T10:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-csmt-ramp",
+      "station_code": "CSMT",
+      "name": "Main Concourse Step-free Ramp",
+      "type": "ramp",
+      "status": "verified_operational",
+      "last_verified_at": "2025-06-12T07:30:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-csmt-elevator",
+      "station_code": "CSMT",
+      "name": "Platforms 1-6 Elevator Block",
+      "type": "elevator",
+      "status": "conflicting",
+      "last_verified_at": "2025-05-28T16:00:00Z",
+      "source": "crowd_report"
+    },
+    {
+      "id": "fac-csmt-tactile",
+      "station_code": "CSMT",
+      "name": "Tactile Path from Main Gate to Platform 1",
+      "type": "tactile_path",
+      "status": "verified_operational",
+      "last_verified_at": "2025-06-08T09:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-csmt-display",
+      "station_code": "CSMT",
+      "name": "Multi-lingual Visual Display Board",
+      "type": "visual_display_board",
+      "status": "verified_operational",
+      "last_verified_at": "2025-06-11T06:00:00Z",
+      "source": "staff_report"
+    },
+    {
+      "id": "fac-csmt-loop",
+      "station_code": "CSMT",
+      "name": "Induction Loop at Booking Office",
+      "type": "induction_loop",
+      "status": "unverified",
+      "last_verified_at": null,
+      "source": null
+    }
+  ]
+}

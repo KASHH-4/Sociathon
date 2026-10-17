@@ -1,0 +1,104 @@
+{
+  "_note": "Illustrative data only. Station codes are real Indian Railways codes; platform counts and facility states are invented for demo purposes.",
+  "stations": [
+    {
+      "code": "CSMT",
+      "name": "Mumbai CSMT",
+      "aliases": ["CST", "VT", "Chhatrapati Shivaji Maharaj Terminus", "Bombay VT", "CSTM"],
+      "city": "Mumbai",
+      "lat": 18.9402,
+      "lng": 72.8356,
+      "platform_count": 18
+    },
+    {
+      "code": "DR",
+      "name": "Dadar",
+      "aliases": ["Dadar Central", "Dadar Mumbai"],
+      "city": "Mumbai",
+      "lat": 19.0186,
+      "lng": 72.8427,
+      "platform_count": 6
+    },
+    {
+      "code": "TNA",
+      "name": "Thane",
+      "aliases": ["Thane Station", "Thana"],
+      "city": "Thane",
+      "lat": 19.1815,
+      "lng": 72.9757,
+      "platform_count": 6
+    },
+    {
+      "code": "KYN",
+      "name": "Kalyan",
+      "aliases": ["Kalyan Jn", "Kalyan Junction"],
+      "city": "Kalyan",
+      "lat": 19.2403,
+      "lng": 73.1305,
+      "platform_count": 6
+    },
+    {
+      "code": "KJT",
+      "name": "Karjat",
+      "aliases": ["Karjat Jn"],
+      "city": "Karjat",
+      "lat": 18.9134,
+      "lng": 73.3145,
+      "platform_count": 3
+    },
+    {
+      "code": "LNL",
+      "name": "Lonavala",
+      "aliases": ["Lonavla", "Lonavala Station"],
+      "city": "Lonavala",
+      "lat": 18.7542,
+      "lng": 73.4031,
+      "platform_count": 3
+    },
+    {
+      "code": "SVJR",
+      "name": "Shivajinagar",
+      "aliases": ["Shivaji Nagar", "Shivajinagar Pune"],
+      "city": "Pune",
+      "lat": 18.5314,
+      "lng": 73.8446,
+      "platform_count": 4
+    },
+    {
+      "code": "PUNE",
+      "name": "Pune Junction",
+      "aliases": ["Pune", "Pune Jn", "Poona", "Pune Station"],
+      "city": "Pune",
+      "lat": 18.5288,
+      "lng": 73.8741,
+      "platform_count": 6
+    },
+    {
+      "code": "MMCT",
+      "name": "Mumbai Central",
+      "aliases": ["Bombay Central", "BCT"],
+      "city": "Mumbai",
+      "lat": 18.9691,
+      "lng": 72.8193,
+      "platform_count": 5
+    },
+    {
+      "code": "ST",
+      "name": "Surat",
+      "aliases": ["Surat Station"],
+      "city": "Surat",
+      "lat": 21.2070,
+      "lng": 72.9869,
+      "platform_count": 5
+    },
+    {
+      "code": "ADI",
+      "name": "Ahmedabad",
+      "aliases": ["Ahmedabad Jn", "ADI Station", "Kalupur"],
+      "city": "Ahmedabad",
+      "lat": 23.0258,
+      "lng": 72.5983,
+      "platform_count": 6
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>TransitHear — Live Monitor</title>
+  <meta name="description" content="TransitHear live backend demo: speech recognition, PA extraction, verified alerts." />
+  <meta name="theme-color" content="#18233c" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/live/live.css" />
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <span class="logo-mark" aria-hidden="true">▶</span>
+    <span class="site-title">TransitHear <span class="badge-live">Live Monitor</span></span>
+    <nav class="header-nav" aria-label="Site navigation">
+      <a href="/" class="nav-link">Back to app</a>
+      <a href="/live/audit" class="nav-link">Audit log</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="main-content">
+
+  <!-- HTTPS warning -->
+  <div id="https-warning" class="notice notice-warn" role="alert" hidden>
+    ⚠ Microphone access requires HTTPS on mobile. Use a tunnel (e.g. ngrok) or run on localhost.
+  </div>
+
+  <!-- Speech unsupported fallback -->
+  <div id="stt-unsupported" class="notice notice-info" role="alert" hidden>
+    ℹ Your browser does not support the Web Speech API (requires Chrome, Edge, or Android browser).
+    Use the text fallback below to demonstrate the pipeline.
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- Section 1: Journey setup                                   -->
+  <!-- ========================================================= -->
+  <section class="card" aria-labelledby="setup-heading">
+    <h2 id="setup-heading" class="card-title">1 · Set up your journey</h2>
+    <p class="card-sub">We use a random device ID stored in your browser — no account needed.</p>
+    <p class="device-id-display">Device ID: <code id="device-id-display">—</code></p>
+
+    <form id="journey-form" novalidate>
+      <fieldset>
+        <legend>Journey type</legend>
+        <label class="radio-label">
+          <input type="radio" name="mode" value="booking" id="mode-booking" />
+          <span>I have a booking (train number)</span>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="mode" value="route" id="mode-route" checked />
+          <span>Just my route (from → to)</span>
+        </label>
+      </fieldset>
+
+      <div id="booking-fields" class="field-group" hidden>
+        <label for="train-number-input" class="field-label">Train number</label>
+        <input type="text" id="train-number-input" class="field-input" placeholder="e.g. 12123"
+               autocomplete="off" inputmode="numeric" />
+        <ul id="train-suggestions" class="suggestions" role="listbox" aria-label="Train suggestions" hidden></ul>
+      </div>
+
+      <div id="route-fields" class="field-group">
+        <div class="two-col">
+          <div>
+            <label for="origin-input" class="field-label">From station</label>
+            <input type="text" id="origin-input" class="field-input" placeholder="e.g. Pune"
+                   autocomplete="off" />
+            <ul id="origin-suggestions" class="suggestions" role="listbox" aria-label="Origin suggestions" hidden></ul>
+          </div>
+          <div>
+            <label for="dest-input" class="field-label">To station</label>
+            <input type="text" id="dest-input" class="field-input" placeholder="e.g. Mumbai CSMT"
+                   autocomplete="off" />
+            <ul id="dest-suggestions" class="suggestions" role="listbox" aria-label="Destination suggestions" hidden></ul>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="start-journey-btn">Save journey</button>
+    </form>
+
+    <div id="journey-status" class="journey-status" hidden>
+      <p id="journey-info" class="journey-info"></p>
+      <details>
+        <summary>Candidate trains considered</summary>
+        <ul id="candidate-list" class="candidate-list"></ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- Section 2: Monitoring                                      -->
+  <!-- ========================================================= -->
+  <section class="card" aria-labelledby="monitor-heading">
+    <h2 id="monitor-heading" class="card-title">2 · PA monitoring</h2>
+
+    <div class="monitor-controls">
+      <div class="lang-row">
+        <label for="lang-select" class="field-label">Recognition language</label>
+        <select id="lang-select" class="field-input field-input--sm">
+          <option value="en-IN" selected>English (India)</option>
+          <option value="hi-IN">Hindi</option>
+          <option value="mr-IN">Marathi</option>
+          <option value="en-US">English (US)</option>
+        </select>
+      </div>
+
+      <button id="start-listen-btn" class="btn btn-primary btn-large" aria-pressed="false">
+        🎤 Start listening
+      </button>
+      <button id="stop-listen-btn" class="btn btn-secondary" hidden>
+        ⏹ Stop listening
+      </button>
+
+      <div id="mic-indicator" class="mic-indicator" aria-live="polite" hidden>
+        <span class="mic-dot" aria-hidden="true"></span>
+        <span id="mic-status">Microphone active</span>
+      </div>
+
+      <div id="wakelockNote" class="notice notice-info" hidden>
+        Screen wake lock active — screen will stay on while listening.
+      </div>
+    </div>
+
+    <div class="transcript-box" aria-live="polite" aria-label="Live transcript">
+      <p class="transcript-label">Live transcript</p>
+      <p id="transcript-interim" class="transcript-interim" aria-live="polite"></p>
+    </div>
+
+    <!-- Text fallback -->
+    <details id="text-fallback-details">
+      <summary class="fallback-summary">Manual text entry (fallback / demo)</summary>
+      <div class="fallback-inner">
+        <textarea id="manual-transcript" class="field-input field-input--textarea"
+                  placeholder="Paste or type a PA announcement transcript here…"
+                  rows="3" maxlength="1000"></textarea>
+        <button id="submit-manual-btn" class="btn btn-secondary">Submit to pipeline</button>
+      </div>
+    </details>
+
+    <p class="privacy-note">
+      🔒 Privacy: audio is processed by your browser's speech service (Google, for Chrome) and never
+      stored by TransitHear. Only recognized text is sent to this server. Non-announcement text is
+      discarded immediately and never persisted.
+    </p>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- Section 3: Alert display                                   -->
+  <!-- ========================================================= -->
+  <section class="card" aria-labelledby="alerts-heading">
+    <h2 id="alerts-heading" class="card-title">3 · Alerts</h2>
+    <div id="vibration-note" class="notice notice-info" hidden></div>
+    <div id="alerts-container" aria-live="assertive" aria-label="Alerts">
+      <p id="no-alerts-msg" class="muted-text">No alerts yet. Start listening or run a simulation below.</p>
+    </div>
+    <details>
+      <summary>History</summary>
+      <ul id="history-list" class="history-list" aria-label="Announcement history"></ul>
+    </details>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- Section 4: Simulation panel                                -->
+  <!-- ========================================================= -->
+  <section class="card" aria-labelledby="sim-heading">
+    <h2 id="sim-heading" class="card-title">4 · Simulation
+      <span class="sim-badge">Simulated, not live audio</span>
+    </h2>
+    <p class="card-sub">Runs canned transcripts through the <em>full</em> backend pipeline with <code>simulated: true</code>.</p>
+
+    <div class="sim-grid">
+      <button class="btn btn-sim" data-scenario="platform_change">Platform change</button>
+      <button class="btn btn-sim" data-scenario="delay">Delay (25 min)</button>
+      <button class="btn btn-sim" data-scenario="early_arrival">Early arrival</button>
+      <button class="btn btn-sim" data-scenario="cancellation">Cancellation</button>
+      <button class="btn btn-sim" data-scenario="safety">Safety alert</button>
+      <button class="btn btn-sim" data-scenario="misrecognized_number">Misrecognized number</button>
+      <button class="btn btn-sim" data-scenario="other_train">Other train (ignore)</button>
+      <button class="btn btn-sim" data-scenario="noise">Noise (no persist)</button>
+    </div>
+
+    <div class="sim-extra">
+      <button class="btn btn-secondary" id="sim-official-btn">Simulate official platform change</button>
+      <button class="btn btn-secondary" id="sim-emergency-btn">Simulate emergency</button>
+    </div>
+
+    <div id="sim-result" class="sim-result" aria-live="polite" hidden></div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- Section 5: Preferences                                     -->
+  <!-- ========================================================= -->
+  <section class="card" aria-labelledby="prefs-heading">
+    <h2 id="prefs-heading" class="card-title">5 · Preferences</h2>
+    <form id="prefs-form">
+      <label class="toggle-label">
+        <input type="checkbox" id="pref-pa" checked />
+        <span>PA monitoring enabled</span>
+      </label>
+      <label class="toggle-label">
+        <input type="checkbox" id="pref-haptic" checked />
+        <span>Haptic vibration alerts</span>
+      </label>
+      <label class="toggle-label">
+        <input type="checkbox" id="pref-sentinel" />
+        <span>Sleep sentinel (keep screen on while charging)</span>
+      </label>
+      <div id="sentinel-note" class="notice notice-info" hidden>
+        Sleep sentinel keeps the screen on and monitoring active while the phone is charging.
+        For best results: plug in, open this page, enable sentinel.
+      </div>
+      <button type="submit" class="btn btn-secondary">Save preferences</button>
+      <span id="prefs-saved" class="muted-text" hidden>Saved.</span>
+    </form>
+  </section>
+
+</main>
+
+<!-- Alert template (hidden, cloned by JS) -->
+<template id="alert-tpl">
+  <article class="alert-card" role="alert">
+    <div class="alert-header">
+      <span class="alert-icon" aria-hidden="true"></span>
+      <span class="alert-type-label"></span>
+      <span class="alert-trust-badge"></span>
+      <time class="alert-time"></time>
+    </div>
+    <p class="alert-display-text"></p>
+    <p class="alert-correction" hidden></p>
+    <div class="alert-platform" hidden>
+      <span class="platform-label">Platform</span>
+      <span class="platform-number"></span>
+    </div>
+    <p class="alert-action"></p>
+    <div class="alert-footer">
+      <button class="btn btn-ack btn-sm">Got it ✓</button>
+      <button class="btn btn-details btn-sm" aria-expanded="false">Details ↓</button>
+    </div>
+    <div class="alert-details" hidden>
+      <dl class="detail-list"></dl>
+    </div>
+  </article>
+</template>
+
+<script src="/live/live.js"></script>
+</body>
+</html>

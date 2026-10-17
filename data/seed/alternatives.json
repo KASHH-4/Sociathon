@@ -1,0 +1,75 @@
+{
+  "_note": "Illustrative alternatives for CSMT→PUNE corridor. Step-free flags and times are invented for demo purposes.",
+  "alternatives": [
+    {
+      "id": "alt-1",
+      "from_code": "CSMT",
+      "to_code": "PUNE",
+      "mode": "train",
+      "description": "12125 Pragati Express — next available on same corridor",
+      "depart": "06:25",
+      "arrive": "09:25",
+      "step_free": true
+    },
+    {
+      "id": "alt-2",
+      "from_code": "CSMT",
+      "to_code": "PUNE",
+      "mode": "train",
+      "description": "12127 Intercity Express — semi-fast option",
+      "depart": "06:05",
+      "arrive": "10:10",
+      "step_free": true
+    },
+    {
+      "id": "alt-3",
+      "from_code": "CSMT",
+      "to_code": "PUNE",
+      "mode": "bus",
+      "description": "MSRTC Shivneri AC Bus — Dadar bus depot to Pune Swargate",
+      "depart": "07:00",
+      "arrive": "11:30",
+      "step_free": false
+    },
+    {
+      "id": "alt-4",
+      "from_code": "CSMT",
+      "to_code": "PUNE",
+      "mode": "cab",
+      "description": "Ola/Uber cab — approx 3-4 hrs depending on traffic",
+      "depart": "anytime",
+      "arrive": "variable",
+      "step_free": true
+    },
+    {
+      "id": "alt-5",
+      "from_code": "PUNE",
+      "to_code": "CSMT",
+      "mode": "train",
+      "description": "12124 Deccan Queen — next on corridor",
+      "depart": "17:05",
+      "arrive": "20:58",
+      "step_free": true
+    },
+    {
+      "id": "alt-6",
+      "from_code": "PUNE",
+      "to_code": "CSMT",
+      "mode": "train",
+      "description": "12126 Pragati Express",
+      "depart": "07:30",
+      "arrive": "10:32",
+      "step_free": true
+    },
+    {
+      "id": "alt-7",
+      "from_code": "PUNE",
+      "to_code": "CSMT",
+      "mode": "bus",
+      "description": "MSRTC Shivneri Bus from Pune to Dadar",
+      "depart": "06:00",
+      "arrive": "10:30",
+      "step_free": false
+    }
+  ]
+}
