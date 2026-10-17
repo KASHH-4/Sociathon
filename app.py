@@ -13,7 +13,16 @@ else:
     VENV_PYTHON = os.path.join(VENV_DIR, "bin", "python")
 
 def enforce_local_venv():
-    """Ensure execution occurs strictly within the local .venv."""
+    """Ensure execution occurs strictly within the local .venv.
+    Skipped automatically on cloud hosts (Render, Railway, etc.) where
+    a managed Python environment is already active."""
+    # Skip on any cloud/CI environment — they manage their own venv
+    cloud_signals = ("RENDER", "RAILWAY_ENVIRONMENT", "HEROKU_APP_NAME", "CI")
+    if any(os.environ.get(s) for s in cloud_signals):
+        return
+    # Skip if .venv doesn't exist and we're not on Windows dev machine
+    if not os.path.exists(VENV_PYTHON) and sys.platform != "win32":
+        return
     if not os.path.exists(VENV_PYTHON):
         import subprocess
         print(f"[TransitHear] Creating local virtual environment in {VENV_DIR}...")
