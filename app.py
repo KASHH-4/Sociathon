@@ -43,6 +43,7 @@ enforce_local_venv()
 # -------------------------------------------------------------
 # Imports (Loaded exclusively from .venv)
 # -------------------------------------------------------------
+import socket
 import mimetypes
 from flask import Flask, send_from_directory, jsonify, request, send_file, make_response, render_template
 from flask_cors import CORS
@@ -211,6 +212,33 @@ def catch_all(path):
         return ("Not Found", 404)
     return render_app()
 
+def get_local_ip():
+    """Detect local network IP for cross-device access on the same Wi-Fi/LAN."""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.settimeout(0.1)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        try:
+            return socket.gethostbyname(socket.gethostname())
+        except Exception:
+            return "127.0.0.1"
+
+@app.route("/api/network-info", methods=["GET"])
+def network_info():
+    """Return local network IP and URL for cross-device testing on the same Wi-Fi."""
+    port = int(os.environ.get("PORT", 5000))
+    ip = get_local_ip()
+    return jsonify({
+        "local_ip": ip,
+        "port": port,
+        "network_url": f"http://{ip}:{port}",
+        "local_url": f"http://127.0.0.1:{port}",
+    })
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     args = [a.lower() for a in sys.argv[1:]]
@@ -220,14 +248,16 @@ if __name__ == "__main__":
     from transithear.config import SUPABASE_ENABLED, GEMINI_ENABLED, GEMINI_MODEL
     from transithear.db import get_repo, is_store_degraded
     _repo = get_repo()
+    local_ip = get_local_ip()
 
     print("\n" + "=" * 62)
-    print(f"[*] TransitHear Server: http://127.0.0.1:{port}")
-    print(f"[*] Local Environment: {sys.executable}")
-    print(f"[*] Mode: {'Development (Hot Reloading Active)' if is_dev else 'Production'}")
-    print(f"[*] Store: {'Supabase' if SUPABASE_ENABLED and not is_store_degraded() else 'MemoryRepo (seed data)'}")
-    print(f"[*] Gemini: {'ENABLED (' + GEMINI_MODEL + ')' if GEMINI_ENABLED else 'DISABLED (rules fallback)'}")
-    print(f"[*] Live demo: http://127.0.0.1:{port}/live")
+    print(f"[*] Local URL:          http://127.0.0.1:{port}")
+    print(f"[*] Same Network (LAN): http://{local_ip}:{port}")
+    print(f"[*] Live Demo (LAN):    http://{local_ip}:{port}/live")
+    print(f"[*] Local Environment:  {sys.executable}")
+    print(f"[*] Mode:               {'Development (Hot Reloading Active)' if is_dev else 'Production'}")
+    print(f"[*] Store:              {'Supabase' if SUPABASE_ENABLED and not is_store_degraded() else 'MemoryRepo (seed data)'}")
+    print(f"[*] Gemini:             {'ENABLED (' + GEMINI_MODEL + ')' if GEMINI_ENABLED else 'DISABLED (rules fallback)'}")
     print(f"[*] Zero node_modules dependency | Full PWA enabled")
     print("=" * 62 + "\n")
     app.run(host="0.0.0.0", port=port, debug=is_dev)

@@ -119,3 +119,15 @@ def test_train_and_station_search(client):
     assert res_stations.status_code == 200
     assert "stations" in res_stations.get_json()
 
+
+def test_network_info_api(client):
+    """Test the /api/network-info endpoint for local network LAN sharing."""
+    res = client.get("/api/network-info")
+    assert res.status_code == 200
+    data = res.get_json()
+    assert "local_ip" in data
+    assert "network_url" in data
+    assert "local_url" in data
+    assert data["network_url"].startswith("http://")
+
+

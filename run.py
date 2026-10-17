@@ -5,7 +5,6 @@ Enforces 100% local virtual environment (.venv). Zero node_modules required.
 Usage:
   python run.py dev    (Development server with hot reloading on http://127.0.0.1:5000)
   python run.py        (Standard server)
-  python dev.py        (Shortcut for dev mode)
 """
 
 import os
@@ -42,11 +41,14 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     args = [a.lower() for a in sys.argv[1:]]
     is_dev = "dev" in args or len(args) == 0 or os.environ.get("FLASK_DEBUG", "1") in ("1", "true", "True")
+    local_ip = app.get_local_ip() if hasattr(app, "get_local_ip") else "127.0.0.1"
     
     print("\n" + "=" * 62)
-    print(f"[*] TransitHear Server: http://127.0.0.1:{port}")
-    print(f"[*] Local Environment: {sys.executable}")
-    print(f"[*] Mode: {'Development (Hot Reloading Active)' if is_dev else 'Production'}")
+    print(f"[*] TransitHear Local:   http://127.0.0.1:{port}")
+    print(f"[*] Same Network (LAN): http://{local_ip}:{port}")
+    print(f"[*] Live Demo (LAN):    http://{local_ip}:{port}/live")
+    print(f"[*] Local Environment:  {sys.executable}")
+    print(f"[*] Mode:               {'Development (Hot Reloading Active)' if is_dev else 'Production'}")
     print(f"[*] Zero node_modules dependency | Full PWA enabled")
     print("=" * 62 + "\n")
     app.app.run(host="0.0.0.0", port=port, debug=is_dev)
