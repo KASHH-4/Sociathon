@@ -351,8 +351,10 @@ class SupabaseRepo(Repo):
 
     def _exec(self, fn):
         """Execute a Supabase query and return data, or raise."""
-        resp = fn()
-        return resp.data
+        res = fn()
+        if hasattr(res, "execute"):
+            res = res.execute()
+        return res.data if hasattr(res, "data") else res
 
     # --- Stations ---
     def get_stations(self, q: str | None = None) -> list[dict]:

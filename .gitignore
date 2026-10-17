@@ -34,3 +34,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 old/
+
+# Environment variables
+.env
+.env.local
+.env.*.local

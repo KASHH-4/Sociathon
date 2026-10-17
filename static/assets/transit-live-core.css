@@ -1,0 +1,539 @@
+/* transit-live-core.css — TransitHear Backend & Supabase Live Integration Styles
+   Matches the exact design tokens, typography (DM Sans + Manrope), and color palette of TransitHear.
+*/
+
+:root {
+  --th-navy: oklch(0.288 0.063 264);
+  --th-signal: oklch(0.544 0.126 242);
+  --th-signal-soft: oklch(0.956 0.021 239);
+  --th-verified: oklch(0.63 0.103 183);
+  --th-verified-ink: oklch(0.386 0.067 183);
+  --th-verified-soft: oklch(0.953 0.018 178);
+  --th-amber: oklch(0.825 0.171 82);
+  --th-amber-soft: oklch(0.974 0.038 88);
+  --th-amber-ink: oklch(0.403 0.074 75);
+  --th-destructive: oklch(0.558 0.223 22);
+  --th-destructive-soft: oklch(0.96 0.03 22);
+  --th-border: oklch(0.902 0.01 252);
+  --th-card: #ffffff;
+  --th-bg: oklch(0.979 0.002 247);
+  --th-foreground: oklch(0.288 0.063 264);
+  --th-muted: oklch(0.465 0.025 254);
+}
+
+/* Live Header Bar Overlay */
+.th-live-header-bar {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  padding: 6px 16px;
+  font-family: "DM Sans", -apple-system, sans-serif;
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  position: relative;
+  z-index: 50;
+}
+
+.th-live-status-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.th-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.th-status-pill.supabase-online {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.th-status-pill.local-store {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.th-status-pill.listening {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  animation: th-pulse 1.8s infinite;
+}
+
+@keyframes th-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+
+.th-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+.th-live-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.th-btn-compact {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.th-btn-compact:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.th-btn-primary {
+  background: #2563eb;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+.th-btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.th-btn-mic-active {
+  background: #dc2626 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+  animation: th-pulse 1.5s infinite;
+}
+
+/* Interim Speech Recognition Banner */
+.th-speech-banner {
+  background: var(--th-amber-soft);
+  border-bottom: 1px solid var(--th-amber);
+  color: var(--th-amber-ink);
+  padding: 8px 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 45;
+}
+
+.th-speech-banner .th-live-text {
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Live Announcement Injected Card */
+.th-live-card {
+  border: 2px solid var(--th-signal);
+  border-radius: 8px;
+  background: var(--th-card);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.th-live-card.emergency {
+  border-color: var(--th-destructive);
+  background: var(--th-destructive-soft);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.th-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.th-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.th-badge.verified {
+  background: var(--th-verified-soft);
+  color: var(--th-verified-ink);
+  border: 1px solid var(--th-verified);
+}
+
+.th-badge.attention {
+  background: var(--th-amber-soft);
+  color: var(--th-amber-ink);
+  border: 1px solid var(--th-amber);
+}
+
+.th-badge.emergency {
+  background: var(--th-destructive-soft);
+  color: var(--th-destructive);
+  border: 1px solid var(--th-destructive);
+}
+
+.th-badge.simulated {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px dashed #cbd5e1;
+}
+
+.th-card-body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.th-card-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--th-foreground);
+  margin: 6px 0;
+  line-height: 1.25;
+}
+
+.th-card-desc {
+  font-size: 13px;
+  color: var(--th-muted);
+  line-height: 1.4;
+}
+
+.th-platform-box {
+  background: var(--th-signal-soft);
+  border: 2px solid var(--th-signal);
+  color: var(--th-signal);
+  border-radius: 8px;
+  padding: 8px 14px;
+  text-align: center;
+  min-width: 64px;
+  flex-shrink: 0;
+}
+
+.th-platform-box .th-lbl {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.th-platform-box .th-num {
+  font-family: "Manrope", sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.th-correction-note {
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: var(--th-amber-soft);
+  border-left: 3px solid var(--th-amber);
+  color: var(--th-amber-ink);
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 0 4px 4px 0;
+}
+
+.th-card-footer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--th-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.th-pipeline-details {
+  margin-top: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 12px;
+}
+
+.th-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.th-pipeline-item {
+  background: #ffffff;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #edf2f7;
+}
+
+.th-pipeline-item .th-p-lbl {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.th-pipeline-item .th-p-val {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* Slide-out Simulation Drawer */
+.th-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.th-drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.th-drawer {
+  width: 100%;
+  max-width: 440px;
+  background: var(--th-card);
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-col;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.th-drawer-backdrop.active .th-drawer {
+  transform: translateX(0);
+}
+
+.th-drawer-header {
+  background: var(--th-navy);
+  color: #ffffff;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.th-drawer-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.th-drawer-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.th-drawer-close:hover {
+  color: #ffffff;
+}
+
+.th-drawer-content {
+  padding: 20px;
+  flex: 1;
+}
+
+.th-drawer-section {
+  margin-bottom: 24px;
+}
+
+.th-drawer-section h4 {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--th-muted);
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+.th-scenario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.th-btn-scenario {
+  padding: 10px 12px;
+  background: var(--th-bg);
+  border: 1px solid var(--th-border);
+  border-radius: 6px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--th-foreground);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.th-btn-scenario:hover {
+  background: var(--th-signal-soft);
+  border-color: var(--th-signal);
+  color: var(--th-signal);
+}
+
+.th-btn-scenario.emergency {
+  border-color: var(--th-destructive);
+  color: var(--th-destructive);
+}
+
+.th-btn-scenario.emergency:hover {
+  background: var(--th-destructive-soft);
+}
+
+/* Modal Dialog for Journey Switcher */
+.th-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.th-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.th-modal {
+  background: var(--th-card);
+  border-radius: 10px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border: 1px solid var(--th-border);
+}
+
+.th-modal-header {
+  background: var(--th-navy);
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.th-modal-body {
+  padding: 20px;
+}
+
+.th-form-group {
+  margin-bottom: 16px;
+}
+
+.th-form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--th-foreground);
+  margin-bottom: 6px;
+}
+
+.th-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border: 1px solid var(--th-border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.th-input:focus {
+  border-color: var(--th-signal);
+  box-shadow: 0 0 0 3px var(--th-signal-soft);
+}
+
+.th-typeahead-list {
+  border: 1px solid var(--th-border);
+  border-radius: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  background: #ffffff;
+}
+
+.th-typeahead-item {
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.th-typeahead-item:hover {
+  background: var(--th-signal-soft);
+  color: var(--th-signal);
+  font-weight: 600;
+}

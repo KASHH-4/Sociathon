@@ -68,9 +68,6 @@ def get_asset_file(relative_path):
 
 # -------------------------------------------------------------
 # Register TransitHear blueprints
-# (registered BEFORE the inline routes below, so if a blueprint and an
-#  inline route share the same URL, the blueprint version is matched first
-#  and the inline version acts as a retained fallback)
 # -------------------------------------------------------------
 from transithear.routes.health import bp as health_bp
 from transithear.routes.journey import bp as journey_bp
@@ -87,118 +84,6 @@ from transithear.routes.transit import bp as transit_bp
 for bp in (health_bp, journey_bp, announce_bp, stream_bp, simulate_bp,
            facilities_bp, recovery_bp, comm_bp, prefs_bp, audit_bp, transit_bp):
     app.register_blueprint(bp)
-
-# -------------------------------------------------------------
-# TransitHear REST API Endpoints (Pure Python, inline)
-# -------------------------------------------------------------
-
-@app.route("/api/health", methods=["GET"])
-def health_check():
-    """Health check endpoint confirming Python Flask backend in local venv."""
-    return jsonify({
-        "status": "online",
-        "app": "TransitHear",
-        "version": "1.0.0",
-        "backend": "Python Flask (Local .venv Only)",
-        "python_executable": sys.executable,
-        "is_local_venv": os.path.normpath(sys.executable).lower() == os.path.normpath(VENV_PYTHON).lower(),
-        "pwa": True,
-        "static_ready": os.path.exists(STATIC_DIR)
-    })
-
-@app.route("/api/transit/status", methods=["GET"])
-def transit_status():
-    """Simulated Deccan Queen 12128 live journey status."""
-    return jsonify({
-        "train_number": "12128",
-        "train_name": "Deccan Queen Express",
-        "origin": "Mumbai CSMT",
-        "destination": "Pune Junction",
-        "current_station": "Lonavala",
-        "current_platform": 2,
-        "status": "In Progress",
-        "delay_minutes": 2,
-        "speed_kmh": 68,
-        "time_to_destination": "1 hr 17 min",
-        "stops": [
-            {"station": "Mumbai CSMT", "time": "17:10", "status": "departed"},
-            {"station": "Lonavala", "time": "19:08", "status": "current"},
-            {"station": "Shivajinagar", "time": "20:10", "status": "expected"},
-            {"station": "Pune Junction", "time": "20:25", "status": "expected"}
-        ],
-        "step_free_destination_verified": True
-    })
-
-@app.route("/api/transit/announcements", methods=["GET"])
-def transit_announcements():
-    """Audio announcements converted into visual cards."""
-    return jsonify({
-        "announcements": [
-            {
-                "id": "ann-101",
-                "timestamp": "19:06",
-                "type": "audio_transcript",
-                "urgency": "normal",
-                "title": "Approaching Lonavala",
-                "text": "Approaching Lonavala station. Doors will open on the left side. Commuters are requested to mind the gap.",
-                "sign_language_available": True,
-                "verified": True
-            },
-            {
-                "id": "ann-102",
-                "timestamp": "18:45",
-                "type": "alert",
-                "urgency": "high",
-                "title": "Platform 3 Caution",
-                "text": "Due to track maintenance, boarding at Shivajinagar will be shifted to Platform 1. Tactile pathways active.",
-                "sign_language_available": True,
-                "verified": True
-            }
-        ]
-    })
-
-@app.route("/api/facilities", methods=["GET"])
-def accessible_facilities():
-    """Accessibility facilities directory for commuter navigation."""
-    station = request.args.get("station", "Pune Junction")
-    return jsonify({
-        "station": station,
-        "facilities": [
-            {"name": "Step-free Ramp (Main Entrance)", "status": "Operational", "accessible": True},
-            {"name": "Braille & Tactile Guidance Path", "status": "Operational", "accessible": True},
-            {"name": "Visual LED Multi-lingual Display", "status": "Active", "accessible": True},
-            {"name": "Deaf Commuter Assistance Desk", "status": "Staffed until 22:00", "accessible": True},
-            {"name": "Platform 1 Elevator", "status": "Operational", "accessible": True},
-            {"name": "Platform 2 Escalator", "status": "Operational", "accessible": True}
-        ]
-    })
-
-@app.route("/api/communication/phrases", methods=["GET"])
-def communication_phrases():
-    """Quick flashcards for communicating with station staff."""
-    return jsonify({
-        "phrases": [
-            {"category": "assistance", "text": "I am Deaf / Hard of Hearing. Please communicate by writing or pointing."},
-            {"category": "transit", "text": "Which platform does train 12128 Deccan Queen arrive at?"},
-            {"category": "emergency", "text": "I need step-free access assistance to the exit."},
-            {"category": "tickets", "text": "Can you check my digital ticket QR code?"}
-        ]
-    })
-
-@app.route("/api/wearable/simulate-haptic", methods=["POST"])
-def simulate_haptic():
-    """Simulate wearable pulse triggers."""
-    data = request.get_json(silent=True) or {}
-    pattern = data.get("pattern", "announcement_pulse")
-    return jsonify({
-        "status": "success",
-        "pattern": pattern,
-        "haptic_profile": {
-            "vibrations": [200, 100, 200] if pattern == "alert" else [150, 80, 150, 80, 300],
-            "intensity": "high" if pattern == "alert" else "medium"
-        },
-        "delivered": True
-    })
 
 # -------------------------------------------------------------
 # Live demo page routes
@@ -285,15 +170,15 @@ def favicon():
 
 def render_app():
     """Render the application shell for any client-side route."""
-    template_path = os.path.join(TEMPLATES_DIR, "index.html")
-    if os.path.exists(template_path):
-        return render_template("index.html")
-
     static_index = get_asset_file("index.html")
-    if static_index:
+    if static_index and os.path.isfile(static_index):
         response = make_response(send_file(static_index))
         response.headers["Cache-Control"] = "no-cache"
         return response
+
+    template_path = os.path.join(TEMPLATES_DIR, "index.html")
+    if os.path.exists(template_path):
+        return render_template("index.html")
 
     return """
     <!DOCTYPE html>
@@ -301,7 +186,7 @@ def render_app():
     <head><meta charset="UTF-8"><title>TransitHear</title></head>
     <body style="font-family:sans-serif;padding:40px;text-align:center;">
         <h1>TransitHear Python Backend Active</h1>
-        <p>Please ensure <code>static/</code> or <code>templates/index.html</code> is present.</p>
+        <p>Please ensure <code>static/index.html</code> is present.</p>
     </body>
     </html>
     """, 200
@@ -318,12 +203,12 @@ def app_views():
 @app.route("/<path:path>")
 def catch_all(path):
     """Catch-all for SPA subroutes or static files."""
-    # Skip /live paths (handled above)
-    if path.startswith("live"):
-        return render_app()
     static_file = get_asset_file(path)
     if static_file and os.path.isfile(static_file):
         return send_file(static_file)
+    # Do not mask missing live or API routes with the React SPA shell
+    if path.startswith("live/") or path.startswith("api/"):
+        return ("Not Found", 404)
     return render_app()
 
 if __name__ == "__main__":
