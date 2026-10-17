@@ -1,1 +1,0 @@
-import{n as e}from"./index-DKmeeZq_.js";import{t}from"./transit-app-Haeo9uBS.js";var n=e(),r=()=>(0,n.jsx)(t,{view:`recovery`});export{r as component};
